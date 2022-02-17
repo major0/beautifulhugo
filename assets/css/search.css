@@ -1,0 +1,29 @@
+.search {
+	width: 100%;
+	position: relative;
+	display: flex;
+	padding: 5px;
+}
+#search-query {
+	width: 100%;
+	border: 2px solid #404040;
+	border-right: none;
+	padding: 2px;
+	border-radius: 5px 0 0 5px;
+	outline: none;
+	color: #909090;
+}
+#search-query:focus{
+	color: #0085a1;
+}
+#search-button {
+	width: 40px;
+	height: 40px;
+	border: 1px solid #404040;
+	background: #404040;
+	text-align: center;
+	color: #fff;
+	border-radius: 0 5px 5px 0;
+	cursor: pointer;
+	font-size: 18px;
+}

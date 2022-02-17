@@ -12,6 +12,22 @@
 
     <div class="collapse navbar-collapse" id="main-navbar">
       <ul class="nav navbar-nav navbar-right">
+	{{ if or (not .File) (and .File (not (eq .File.BaseFileName "search"))) }}
+	  <li>
+              {{ if isset .Site.Params "gcse" }}
+                <a href="#modalSearch" data-toggle="modal" data-target="#modalSearch" style="outline: none;">
+                  <span class="hidden-sm hidden-md hidden-lg">{{ i18n "gcseLabelShort" }}</span> <span id="searchGlyph" class="glyphicon glyphicon-search"></span>
+                </a>
+	      {{ else }}
+	        <form action="{{ "/search/" | absURL }}" method="GET" class="search">
+	          <input type="text" id="search-query" name="s" style="outline: none;" placeholder="Search"/>
+		  <button type="submit" id="search-button">
+		    <i class="fa fa-search"></i>
+		  </button>
+                </form>
+	      {{ end }}
+          </li>
+	{{ end }}
         {{ range .Site.Menus.main.ByWeight }}
           {{ if .HasChildren }}
             <li class="navlinks-container">
@@ -50,14 +66,6 @@
               {{ end }}
             </li>
           {{ end }}
-        {{ end }}
-
-        {{ if isset .Site.Params "gcse" }}
-          <li>
-            <a href="#modalSearch" data-toggle="modal" data-target="#modalSearch" style="outline: none;">
-              <span class="hidden-sm hidden-md hidden-lg">{{ i18n "gcseLabelShort" }}</span> <span id="searchGlyph" class="glyphicon glyphicon-search"></span>
-            </a>
-          </li>
         {{ end }}
       </ul>
     </div>
