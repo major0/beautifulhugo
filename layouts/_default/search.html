@@ -29,14 +29,16 @@
 </div>
 
 <!-- Search -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.5.3/fuse.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
-{{- $search := resources.Get "js/search.js" | js.Build "assets/js/search.js" }}
+{{- $jquery := resources.GetRemote "https://code.jquery.com/jquery-1.12.4.js" }}
+{{- $fuse := resources.GetRemote "https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.5.3/fuse.js" }}
+{{- $mark := resources.GetRemote "https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.js" }}
+{{- $search := resources.Get "js/search.js" }}
+{{- $jsBundle := slice ($jquery) ($fuse) ($mark) ($search) | resources.Concat "assets/js/search.js" | js.Build }}
 {{- if .Site.IsServer }}
-<script src="{{ $search.RelPermalink }}"></script>
+<script src="{{ $jsBundle.RelPermalink }}"></script>
 {{- else }}
 {{- $search := $search | minify | fingerprint }}
-<script src="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}" defer></script>
+<script type="text/javascript">{{ $jsBundle.Content }}</script>
 {{- end }}
 <!-- End Search -->
 
