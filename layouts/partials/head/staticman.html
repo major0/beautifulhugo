@@ -1,0 +1,6 @@
+{{- if .Site.Params.staticman -}}
+<link rel="stylesheet" href="{{ "css/staticman.css" | absURL }}" />
+  {{- if .Site.Params.staticman.recaptcha -}}
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  {{- end -}}
+{{- end -}}
