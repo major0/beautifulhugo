@@ -1,13 +1,71 @@
-{{- if .Site.Params.selfHosted -}}
-<script src="{{ "js/katex.min.js" | absURL }}"></script>
-<script src="{{ "js/auto-render.min.js" | absURL }}"></script>
-<script src="{{ "js/jquery.min.js" | absURL }}"></script>
-<script src="{{ "js/bootstrap.min.js" | absURL }}"></script>
-{{- else -}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+{{- $jsJQuery := resources.GetRemote "https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.js" }}
+{{- $jsBootstrap := resources.GetRemote "https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" }}
+{{- $jsBundle := slice ($jsJQuery) ($jsBootstrap) | resources.Concat "js/bundle.js" }}
+
+
+{{- if .Site.Params.piwik }}
+{{-   $piwik := resources.Get "js/piwik.js" }}
+{{-   $jsBundle := slice ($jsBundle) ($piwik) | resources.Concat "js/bundle.js" }}
 {{- end }}
 
-<script src="{{ "js/main.js" | absURL }}"></script>
+{{- if and .Site.Params.delayDisqus .Site.DisqusShortname }}
+{{-   $disqus = resources.Get "js/disqus.js" }}
+{{-   $jsBundle := slice ($jsBundle) ($disqus) | resources.Concat "js/bundle.js" }}
+{{- end }}
+
+{{- if .Site.Params.gcse }}
+{{-   $gcse := resources.Get "js/gcse.js" }}
+{{-   $jsBundle := slice ($jsBundle) ($gcse) | resources.Concat "js/bundle.js" }}
+{{- end }}
+
+{{- if .Site.IsServer }}
+<script defer type="text/javascript" src="{{ $jsBundle.RelPermalink }}"></script>
+{{- else }}
+{{-   $jsBundle := $jsBundle | minify | fingerprint }}
+<script defer type="text/javascript" src="{{ $jsBundle.RelPermalink }}" integrity="{{ $jsBundle.Data.Integrity }}"></script>
+{{- end }}
+
+{{- if ($.Scratch.Get "photoswipeloaded") }}
+{{- $photoswipe_src := resources.GetRemote "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.js" }}
+{{- $photoswipe_ui_src := resources.GetRemote "https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.js" }}
+{{- $jsPhotoswipe := slice ($photoswipe_src) ($photoswipe_ui_src) | resources.Concat "js/photoswipe.js" }}
+{{-   if .Site.IsServer }}
+<script defer type="text/javascript" src="{{ $jsPhotoswipe.RelPermalink }}"></script>
+{{-   else }}
+<script defer type="text/javascript" src="{{ $jsPhotoswipe.RelPermalink }}" integrity="{{ $jsPhotoswipe.Data.Integrity}}"></script>
+{{-   end }}
+{{- end }}
+
+{{- $jsJekyl := resources.Get "js/jekyl.js" | js.Build }}
+{{- if .Site.IsServer }}
+<script defer type="text/javascript" src="{{ $jsJekyl.RelPermalink }}"></script>
+{{- else }}
+{{-   $jsJekyl := $jsJekyl | minify |fingerprint }}
+<script defer type="text/javascript">{{ $jsJekyl.Content }}</script>
+{{- end }}
+
+{{- if  .Site.Params.useHLJS }}
+{{-   $highlight := resources.GetRemote "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/highlight.js" }}
+{{-   $hljs := resources.Get "js/hljs.js" }}
+{{-   $hljsBundle := slice ($highlight) ($hljs) | resources.Concat "js/highlight.js" }}
+{{-   if .Site.IsServer }}
+<script defer type="text/javascript" src="{{ $hljs.RelPermalink }}"</script>
+{{-   else }}
+{{-   $hljs := $hljs | minify | fingerprint }}
+<script defer type="text/javascript">{{ $hljs.Content }}</script>
+{{-   end }}
+{{- end }}
+
+{{ if and .Site.Params.delayDisqus .Site.DisqusShortname }}
+<!-- Disqus -->
+<script id="dsq-count-scr" src="//{{ .Site.DisqusShortname }}.disqus.com/count.js" async></script>
+<!-- End Disqus -->
+{{ end }}
+
+{{- if .Site.Params.piwik }}
+<noscript>
+<!-- Piwik Image Tracker -->
+<img src="http://{{ .Site.Params.piwik.server }}/piwik.php?idsite={{ .Site.Params.piwik.id }}&amp;rec=1" style="border:0" alt="" />
+</noscript>
+<!-- End Piwik -->
+{{- end }}

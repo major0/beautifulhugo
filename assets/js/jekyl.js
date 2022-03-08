@@ -5,6 +5,14 @@ var main = {
   bigImgEl : null,
   numImgs : null,
 
+  wait : function() {
+    if (window.$) {
+      main.init();
+    } else {
+      window.setTimeout(main.wait, 50);
+    }
+  },
+
   init : function() {
     // Shorten the navbar after scrolling a little bit down
     $(window).scroll(function() {
@@ -179,4 +187,4 @@ var main = {
 
 // 2fc73a3a967e97599c9763d05e564189
 
-document.addEventListener('DOMContentLoaded', main.init);
+document.addEventListener('DOMContentLoaded', main.wait);

@@ -1,6 +1,3 @@
-{{ if and .Site.Params.delayDisqus .Site.DisqusShortname }}
-<!-- Delayed Disqus -->
-<script type="text/javascript">
 $(function(){
   $('#show-comments').on('click', function(){
     var disqus_shortname = '{{ .Site.DisqusShortname }}';
@@ -16,7 +13,3 @@ $(function(){
     $(this).hide();
     });
   });
-</script>
-<script id="dsq-count-scr" src="//{{ .Site.DisqusShortname }}.disqus.com/count.js" async></script>
-<!-- End Delayed Disqus -->
-{{ end }}

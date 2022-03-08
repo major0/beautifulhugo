@@ -1,7 +1,16 @@
+{{- $cssBundle := resources.Get "css/codeblock.css" }}
+
 {{- if .Site.Params.useHLJS }}
-<!-- Highlight CSS -->
-<link rel="stylesheet" href="{{ "css/highlight.min.css" | absURL }}" />
-{{- else -}}
-<link rel="stylesheet" href="{{ "css/syntax.css" | absURL }}" />
-{{- end -}}
-<link rel="stylesheet" href="{{ "css/codeblock.css" | absURL }}" />
+{{-   $highlight := resources.GetRemote "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/default.min.css" }}
+{{-   $cssBundle := slice ($highlight) ($cssBundle) | resources.Concat "css/bundle.css" }}
+{{- else }}
+{{-   $highlight := resources.Get "css/syntax.css" }}
+{{-   $cssBundle := slice ($highlight) ($cssBundle) | resources.Concat "css/bundle.css" }}
+{{- end }}
+
+{{- if .Site.IsServer }}
+<link rel="stylesheet" href="{{ $cssBundle.RelPermalink }}">
+{{- else }}
+{{-   $cssBundle := $cssBundle | minify | fingerprint | resources.PostProcess }}
+<style>{{ $cssBundle.Content | safeCSS }}</style>
+{{- end }}

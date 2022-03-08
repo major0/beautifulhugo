@@ -1,6 +1,16 @@
 {{- if .Site.Params.staticman -}}
-<link rel="stylesheet" href="{{ "css/staticman.css" | absURL }}" />
-  {{- if .Site.Params.staticman.recaptcha -}}
-  <script src='https://www.google.com/recaptcha/api.js'></script>
-  {{- end -}}
+{{-   $staticman := resources.Get "css/staticman.css" }}
+{{-   if .Site.IsServer }}
+<noscript><link href="{{ $staticman.RelPermalink }}" rel="stylesheet"></noscript>
+<link href="{{ $staticman.RelPermalink }}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+{{-   else }}
+
+{{-     $staticman := $staticman | minify | fingerprint | resources.PostProcess }}
+<noscript><link href="{{ $staticman.RelPermalink }}" integrity="{{ $staticman.Data.Integrity }}" rel="stylesheet"></noscript>
+<link href="{{ $staticman.RelPermalink }}" integrity="{{ $staticman.Data.Integrity }}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+{{-   end }}
+
+{{-   if .Site.Params.staticman.recaptcha -}}
+<script async src='https://www.google.com/recaptcha/api.js'></script>
+{{-   end -}}
 {{- end -}}
