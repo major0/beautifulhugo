@@ -3,7 +3,7 @@
 body {
   font-family: 'Lora', 'Times New Roman', serif;
   font-size: 18px;
-  color: #404040;
+  color: #222;
   position: relative;
   background: #FFF;
   display: flex;
@@ -31,21 +31,21 @@ p + p {
 }
 p a {
   /* text-decoration: underline */
-  color: #008AFF;
+  color: #08A;
 }
 h1,h2,h3,h4,h5,h6 {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 800;
 }
 a {
-  color: #008AFF;
+  color: #08A;
 }
 a:hover,
 a:focus {
-  color: #0085a1;
+  color: #08A;
 }
 blockquote {
-  color: #808080;
+  color: #222;
   font-style: italic;
 }
 blockquote p:first-child {
@@ -98,12 +98,12 @@ div.panel-body a.list-group-item.view-all {
 ::-moz-selection {
   color: white;
   text-shadow: none;
-  background: #0085a1;
+  background: #08A;
 }
 ::selection {
   color: white;
   text-shadow: none;
-  background: #0085a1;
+  background: #08A;
 }
 img::selection {
   color: white;
@@ -151,14 +151,14 @@ img {
 .navbar-custom .navbar-brand,
 .navbar-custom .nav li a {
   font-weight: 800;
-  color: #404040;
+  color: #333;
 }
 
 .navbar-custom .navbar-brand:hover,
 .navbar-custom .navbar-brand:focus ,
 .navbar-custom .nav li a:hover,
 .navbar-custom .nav li a:focus {
-  color: #0085a1;
+  color: #035;
 }
 
 .navbar-custom .navbar-brand-logo {
@@ -306,7 +306,7 @@ footer {
 }
 
 footer a {
-  color: #404040;
+  color: #111;
 }
 
 footer .list-inline {
@@ -321,6 +321,9 @@ footer .copyright {
 footer .theme-by {
   text-align: center;
   margin: 10px 0 0;
+}
+footer .text-muted {
+  color: 444;
 }
 
 @media only screen and (min-width: 768px) {
@@ -354,13 +357,13 @@ footer .theme-by {
 
 .post-preview a {
   text-decoration: none;
-  color: #404040;
+  color: #222;
 }
 
 .post-preview a:focus,
 .post-preview a:hover {
   text-decoration: none;
-  color: #0085a1;
+  color: #08A;
 }
 
 .post-preview .post-title {
@@ -375,7 +378,7 @@ footer .theme-by {
 .post-preview .post-meta,
 .post-heading .post-meta,
 .page-meta {
-  color: #808080;
+  color: #222;
   font-size: 18px;
   font-style: italic;
   margin: 0 0 10px;
@@ -386,7 +389,7 @@ footer .theme-by {
 .post-preview .post-meta a,
 .post-heading .post-meta a,
 .page-meta a {
-  color: #404040;
+  color: #222;
   text-decoration: none;
 }
 .post-preview .post-entry {
@@ -430,7 +433,7 @@ footer .theme-by {
 
 .blog-tags {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #999;
+  color: #222;
   font-size: 15px;
   margin: 8px;
 }
@@ -440,7 +443,7 @@ footer .theme-by {
 }
 
 .blog-tags a {
-  color: #008AFF;
+  color: #038;
   text-decoration: none;
   margin: 8px;
   padding: 5px 10px;
@@ -452,8 +455,8 @@ footer .theme-by {
 
 .blog-tags a:hover {
   border-radius: 2px;
-  color: #008AFF;
-  background-color: #CCC;
+  color: #0AF;
+  background-color: #111;
 }
 
 .post-preview .blog-tags {
@@ -644,7 +647,7 @@ footer .theme-by {
   padding: 10px 5px;
   background: #FFF;
   border-radius: 0;
-  color: #404040;
+  color: #222;
 }
 @media only screen and (min-width: 768px) {
   .pager li a {
@@ -653,9 +656,9 @@ footer .theme-by {
 }
 .pager li a:hover,
 .pager li a:focus {
-  color: #FFF;
-  background: #0085a1;
-  border: 1px solid #0085a1;
+  color: #EEE;
+  background: #08A;
+  border: 1px solid #08A;
 }
 
 .pager {
@@ -683,12 +686,12 @@ table {
 }
 table tr {
   border-top: 1px solid #cccccc;
-  background-color: #ffffff;
+  background-color: #FFF;
   margin: 0;
   padding: 0;
 }
 table tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  background-color: #EEE;
 }
 table tr th {
   font-weight: bold;
@@ -761,18 +764,18 @@ div.splitbox div.right {
   padding: 10px 5px;
   background: #FFF;
   border-radius: 0;
-  color: #404040;
+  color: #222;
 }
 @media only screen and (min-width: 768px) {
   .disqus-comments button {
     padding: 15px 25px;
   }
 }
-.disqus-comments button:hover, 
+.disqus-comments button:hover,
 .disqus-comments button:focus {
   color: #FFF;
-  background: #0085a1;
-  border: 1px solid #0085a1;
+  background: #08A;
+  border: 1px solid #08A;
 }
 
 /* Related posts */
@@ -804,10 +807,10 @@ h4.see-also {
   font-size: 16px;
   text-align: center;
   transition: all 150ms ease-in-out;
-  color: #fff;
+  color: #FFF;
 }
  ul.share li a {
-  background-color: #b5c6ce;
+  background-color: #333;
   display: block;
   border-radius: 50%;
   text-decoration: none !important;
